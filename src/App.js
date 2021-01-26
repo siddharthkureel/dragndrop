@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Navbar from './components/Navbar';
+import Home from "./pages/Home";
+import { ImageContext } from './context/ImageContext';
+import { JsonContext } from './context/JsonContext';
+import { SelectWordContext } from './context/SelectWordContext';
+
+
+const App = () => {
+    const [value, setValue] = useState(null);
+    const [jsonData, setJsonData] = useState(null);
+    const [selectWord, setSelectWord] = useState([]);
+    return (
+        <div style={styles.container} >
+            <SelectWordContext.Provider value={{ selectWord, setSelectWord }}>
+                <JsonContext.Provider  value={{ jsonData, setJsonData }}>
+                    <ImageContext.Provider value={{ value, setValue }} >
+                        <Navbar />
+                        <Home/>
+                    </ImageContext.Provider>
+                </JsonContext.Provider>
+            </SelectWordContext.Provider>
+        </div>
+    );
+}
+
+const styles = {
+    container: {
+        margin: '0 5%'
+    }
 }
 
 export default App;
